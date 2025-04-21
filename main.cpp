@@ -3,69 +3,50 @@
 
 int main()
 {
-    // Ввод имени, возвраста, пола(проверка), веса и роста
-    std::cout << "Введите имя: ";
-    std::string name{};
-    std::cin >> name;
+    /* Ввод пользователем переменных: missionName(назв. миссии), symbol(индиф.)
+    height(высота), speed(скорость), shockAbsorber(работа армотизатора)*/
+    std::cout << "Введите название миссии: "; 
+    std::string missionName;                  
+    std::cin >> missionName;
 
-    std::cout << "Введите возраст: ";
-    int age{};
-    std::cin >> age;
+    std::cout << "Введите идентификатор зонда (один символ): ";
+    char symbol;
+    std::cin >> symbol;
 
-    std::cout << "Выберите пол (M/F): ";
-    char gender{};
-    std::cin >> gender;
-
-    if (gender != 'M' && gender != 'F')
-    {
-        std::cout << "Некорректный ввод пола. Используйте 'M' или 'F'.\n";
-        return 1;
-    }
-
-    std::cout << "Введите вес (в кг):\n";
-    double weight{};
-    std::cin >> weight;
-
-    std::cout << "Введите рост (в см):\n";
-    double height{};
+    std::cout << "Введите высоту посадки (в метрах): ";
+    double height;
     std::cin >> height;
 
-    // Ввод неизменных значений underweight(Недовес), normal(Норма), overweight(Избыточный вес) и formula(100 для выражения)
-    const double formula = 100.0;
-    const double underweight = 18.5;
-    const double normal = 24.9;
-    const double overweight = 29.9;
+    std::cout << "Введите скорость посадки (в м/с): ";
+    double speed;
+    std::cin >> speed;
 
-    // Рассчёт metrIn2(метр в квадрате) и imt(ИМТ) и дальнейший вывод
-    double metrIn2 = height / formula;
-    double imt = weight / (metrIn2 * metrIn2);
-    std::cout << "Ваш ИМТ: " << imt << '\n';
+    std::cout << "Работает ли амортизатор (1 — да, 0 — нет): ";
+    bool shockAbsorber{};
+    std::cin >> shockAbsorber;
 
-    // Функция if с выводом подходящей категории
-    std::string category = "Категория: ";
-    if (imt < underweight)
-        std::cout << category << "Недовес\n";
-    else if (imt <= normal)
-        std::cout << category << "Норма\n";
-    else if (imt <= overweight)
-        std::cout << category << "Избыточный вес\n";
-    else
-        std::cout << category << "Ожирение\n";
+    // Расчёт статуса посадки по амортизатору
+    constexpr double safeSpeed = 5.0;
 
-    // Функция вывода опросника и функция для вывода подходящего ответа
-    bool agree{};
-    std::cout << "Согласны с результатом? (1 - да / 0 - нет):\n";
-    std::cin >> agree;
+    std::string status;
+    if (speed <= safeSpeed && shockAbsorber) {status = "Посадка прошла успешно!";} 
+    else {status = "Аварийная посадка...";}
 
-    if (agree)
-        std::cout << "Спасибо!\n";
-    else
-        std::cout << "На правду не обижаются :)\n";
+    // Вывод отчёта о посадке
+    std::cout << "\n--- Отчёт о посадке ---\n";
+    std::cout << "Миссия: " << missionName << '\n';
+    std::cout << "Идентификатор зонда: " << symbol << '\n';
+    std::cout << "Высота: " << height << " м\n";
+    std::cout << std::scientific << "Скорость: " << speed << " м/с" << '\n';
+    std::cout << "Статус посадки: " << status << '\n';
 
-    std::cout << "Спасибо за использование анкеты!\n";
-
-    // Вывод размера байтов для imt(ИМТ)
-    std::cout << "Чтоб ты знал, размер типа ИМТ: " << sizeof(imt) << " байт\n";
+    // Вывод размера переменных
+    std::cout << "\n--- Размеры переменных ---\n";
+    std::cout << "int: " << sizeof(int) << " байт\n";
+    std::cout << "double: " << sizeof(double) << " байт\n";
+    std::cout << "bool: " << sizeof(bool) << " байт\n";
+    std::cout << "char: " << sizeof(char) << " байт\n";
+    std::cout << "std::string: " << sizeof(std::string) << " байт\n";
 
     return 0;
 }
